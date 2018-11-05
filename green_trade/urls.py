@@ -16,8 +16,20 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import (include, path)
+from rest_framework import routers
+
+from inventory.views import IndexView
+
+router = routers.DefaultRouter()
+
+router.register('index', IndexView)
+
+api_urlpatterns = [
+        path('accounts/', include('rest_registration.api.urls'))
+        ]
 
 urlpatterns = [
-    path('index/', include('inventory.urls')),
+    path('index/', include(router.urls)),
+    path('api/v1/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]

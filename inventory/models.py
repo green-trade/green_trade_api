@@ -6,7 +6,8 @@ import uuid
 class Base(models.Model):
 
     # make the primary key an uuid, helps with sec and no clash
-    id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    id = models.UUIDField(
+            default=uuid.uuid4(), editable=False, primary_key=True)
 
     # an auto crate and update time feadls
     created_at = models.DateTimeField(auto_now_add=True)
@@ -17,7 +18,7 @@ class Base(models.Model):
         abstract = True
 
 
-class Invetory(Base):
+class Inventory(Base):
     name = models.CharField(max_length=256)
     provider = models.CharField(max_length=256)
     thc_percent = models.IntegerField()
