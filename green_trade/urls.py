@@ -18,18 +18,10 @@ from django.contrib import admin
 from django.urls import (include, path)
 from rest_framework import routers
 
-from inventory.views import StrainView
-
-router = routers.DefaultRouter()
-
-router.register('strains', StrainView)
-
-api_urlpatterns = [
-        path('accounts/', include('rest_registration.api.urls'))
-        ]
+api_urlpatterns = [path('accounts/', include('rest_registration.api.urls'))]
 
 urlpatterns = [
-    path('api/v1/', include(router.urls)),
+    path('api/v1/', include('inventory.urls')),
     path('api/v1/auth/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]

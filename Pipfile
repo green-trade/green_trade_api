@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 django-rest-registration = "*"
 django-extensions = "*"
+ipython = "*"
+ipdb = "*"
 
 [dev-packages]
 
