@@ -7,10 +7,7 @@ from rest_framework import viewsets
 from green_trade.serializers import InventorySerializer
 
 
-class IndexView(viewsets.ModelViewSet):
-    '''
-    api for nothing fools
-    '''
-
-    queryset = Inventory.objects.all()[:5]
+class StrainView(viewsets.ModelViewSet):
+    ''' the main entry point for thew api '''
+    queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
