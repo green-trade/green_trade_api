@@ -4,9 +4,7 @@ from rest_framework.test import APIRequestFactory
 
 from inventory.views import StrainsView
 
-import re
 import uuid
-import json
 from datetime import datetime
 
 
@@ -21,23 +19,6 @@ class TestBaseStrains(TestCase):
         self.factory = APIRequestFactory()
 
         self.make_invintory_db()
-
-    def get_api_strains(self, get_obj=None, pk=None):
-        if get_obj and pk:
-            strains_view = StrainsView.as_view(get_obj)
-        elif get_obj and not pk:
-            raise Exception('needs both a object and a pk')
-        elif pk and not get_obj:
-            raise Exception('needs both a object and a pk')
-        else:
-            strains_view = StrainsView.as_view({'get': 'list'})
-
-        request = self.factory.get("")
-
-        if pk:
-            return strains_view(request, pk=pk)
-        else:
-            return strains_view(request)
 
     def make_invintory_db(self):
         default_data = [{
@@ -74,14 +55,21 @@ class TestBaseStrains(TestCase):
             self.default_data.append(obj)
 
     def test_get_strains(self):
-        get_request = self.get_api_strains()
+        strains_view = StrainsView.as_view({'get': 'list'})
+
+        request = self.factory.get("")
+
+        get_request = strains_view(request)
 
         self.assertEqual(get_request.status_code, 200)
 
     def test_get_a_strain_with_uuid(self):
         pk = self.default_data[0].pk
 
-        get_request = self.get_api_strains(
-                get_obj={'get': 'retrieve'}, pk=pk)
+        strains_view = StrainsView.as_view({'get': 'retrieve'})
+
+        request = self.factory.get("")
+
+        get_request = strains_view(request, pk=pk)
 
         self.assertEqual(get_request.status_code, 200)
